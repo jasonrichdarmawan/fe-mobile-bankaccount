@@ -1,4 +1,4 @@
-package com.reactnative;
+package com.personal.bebankaccount;
 
 import android.app.Application;
 import android.content.Context;
