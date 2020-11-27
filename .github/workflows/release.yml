@@ -41,6 +41,7 @@ jobs:
 
       - name: Build Android Release
         run: |
+          export ENVFILE=.env.development
           cd android && ./gradlew assembleRelease
 
       - uses: actions/upload-artifact@v1
