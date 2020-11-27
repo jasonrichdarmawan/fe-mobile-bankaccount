@@ -37,7 +37,7 @@ jobs:
           gpg -d --passphrase "${{ secrets.RELEASE_KEYSTORE_PASSPHRASE }}" --batch release.keystore.asc > android/app/release.keystore
       
       - name: Make gradlew executable
-        run: cd android && chmod +x ./gradlew
+        run: chmod +x android/gradlew
 
       - name: Build Android Release
         run: |
