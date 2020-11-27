@@ -82,22 +82,26 @@ const HistorySelect = ({
   function handleGetTransactions({Start, End}: getTransactionsPathVariable) {
     if (token !== undefined && validateToken(token)) {
       getTransactions({Start, End, token}).then((data) => {
-        data.transactions.forEach((transaction, index) => {
-          if (index === 0) {
-            data.transactions[index].Ending_Balance = data.Opening_Balance;
-          }
-          if (Account_Number === data.transactions[index].Source) {
-            data.transactions[index].Ending_Balance =
-              data.transactions[Math.max(0, index - 1)].Ending_Balance -
-              transaction.transaction_Value;
-          } else if (Account_Number === data.transactions[index].Destination) {
-            data.transactions[index].Ending_Balance =
-              data.transactions[Math.max(0, index - 1)].Ending_Balance +
-              transaction.transaction_Value;
-          }
-        });
-        setTransactions(data.transactions);
-        setIsTransactionsShown(true);
+        if (data.message_code === 200) {
+          data.transactions.forEach((transaction, index) => {
+            if (index === 0) {
+              data.transactions[index].Ending_Balance = data.Opening_Balance;
+            }
+            if (Account_Number === data.transactions[index].Source) {
+              data.transactions[index].Ending_Balance =
+                data.transactions[Math.max(0, index - 1)].Ending_Balance -
+                transaction.transaction_Value;
+            } else if (
+              Account_Number === data.transactions[index].Destination
+            ) {
+              data.transactions[index].Ending_Balance =
+                data.transactions[Math.max(0, index - 1)].Ending_Balance +
+                transaction.transaction_Value;
+            }
+          });
+          setTransactions(data.transactions);
+          setIsTransactionsShown(true);
+        }
       });
     }
   }
